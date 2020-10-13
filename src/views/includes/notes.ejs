@@ -1,0 +1,25 @@
+<% if(notes.length > 0) { %>
+<% notes.forEach(note => { %>
+<section class="nota" data-note-id="<%= note._id %>">
+    <h3 class="titulo_nota"><%= note.title %></h3>
+    <span></span>
+    <p class="txt_nota"><%= note.content %></p>
+    <footer class="data_nota">
+        <%= dayjs(note.lastModified).format('[Última alteração feita em ]DD/MM/YYYY [às] HH:mm') %>
+    </footer>
+    <section class="cta_nota">
+        <button class="btnCopia" id="btnCopia">
+            <img src="./img/copy.svg" alt="Copiar nota">
+        </button>
+        <button class="btnEdita" id="btnEdita">
+            <img src="./img/pencil.svg" alt="Editar nota">
+        </button>
+        <button class="btnRemove" id="btnRemove">
+            <img src="./img/remove.svg" alt="Excluir nota">
+        </button>
+    </section>
+</section>
+<% }) %>
+<% } else { %>
+<span>Nada por aqui...<br>Anote alguma coisa!</span>
+<% } %>

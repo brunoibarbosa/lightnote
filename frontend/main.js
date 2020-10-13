@@ -1,0 +1,33 @@
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
+
+// SASS
+import './assets/sass/main.scss'
+
+// Imagens
+import copy from './assets/img/copy.svg'
+import filter from './assets/img/filter.svg'
+import github from './assets/img/github.svg'
+import linkedin from './assets/img/linkedin.svg'
+import logo from './assets/img/logo.svg'
+import pencil from './assets/img/pencil.svg'
+import remove from './assets/img/remove.svg'
+import plus from './assets/img/plus.svg'
+import ticket from './assets/img/ticket.svg'
+import more from './assets/img/gear.svg'
+import logout from './assets/img/logout.svg'
+import close from './assets/img/close.svg'
+
+// JS
+import './assets/js/app'
+import Login from './assets/js/Login'
+import Note from './assets/js/Note'
+
+const acesso = new Login('#form-acesso')
+acesso.init()
+
+const nova_nota = new Note('#form-nova-nota')
+nova_nota.init()
+
+const nota_editada = new Note('#form-edita-nota')
+nota_editada.init()

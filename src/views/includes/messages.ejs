@@ -1,0 +1,15 @@
+<% if (errors.length > 0) { 
+errors.forEach(e => { %>
+<section class="notificacao error">
+    <p><%= e %></p>
+    <button class="btnFechaNotificacao"><img src="./img/close.svg" alt="Fechar notificação"></button>
+</section>
+<% }) } %>
+
+<% if (success.length > 0) {
+    success.forEach(s => { %>
+<section class="notificacao success">
+    <p><%= s %></p>
+    <button class="btnFechaNotificacao"><img src="./img/close.svg" alt="Fechar notificação"></button>
+</section>
+<% }) } %>

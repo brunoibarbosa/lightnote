@@ -1,0 +1,130 @@
+<%- include('includes/head') %>
+<header>
+	<nav>
+		<button id="btnCod" class="btnCod">
+			<img src="./img/ticket.svg" alt="Entrar ou criar código de acesso">
+		</button>
+		<button id="btnOpc" class="btnOpc">
+			<img src="./img/gear.svg" alt="Mais opções">
+		</button>
+	</nav>
+	<img class="logo" src="./img/logo.svg" alt="LightNote, anote sem notar.">
+	<section class="ticket_acesso">
+		<span>Código de Acesso</span>
+		<% if (user) { %>
+		<p class="code-user"><%= user.code %></p>
+		<button class="fecharBalao">Fechar</button>
+		<% } else { %>
+		<p>Insira ou crie um código e uma senha para acessar as notas em outros dispositivos.</p>
+		<form id="form-acesso" action="" method="post">
+			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+			<section>
+				<input type="text" name="code" id="code" maxlength="6">
+				<label for="code">Código</label>
+			</section>
+			<section>
+				<input type="password" name="password" id="password" minlength="4" maxlength="8">
+				<label for="password">Senha</label>
+			</section>
+			<button type="submit" id="btnEntrar" class="btnEntrar">Entrar</button>
+			<button type="submit" id="btnCadastrar" class="btnRegistrar">Cadastrar</button>
+		</form>
+		<a href="/sobre">Como funciona?</a>
+		<% } %>
+	</section>
+	<section class="opcoes">
+		<span>Opções</span>
+		<a href="/sobre">Como funciona?</a>
+		<% if(user) { %>
+		<a href="/logout">Desconectar
+			<img src="./img/logout.svg" alt="Desconectar">
+		</a>
+		<% } %>
+		<button class="fecharBalao">Fechar</button>
+	</section>
+	<section class="janelaNotificacao">
+		<%- include('includes/messages') %>
+	</section>
+	<section class="editaNota" id="editaNota">
+		<form action="/note/edit/:id" method="post" id="form-edita-nota">
+			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+			<input type="text" id="tituloEdita" name="title">
+			<span></span>
+			<textarea id="conteudoEdita" rows="auto" name="content"></textarea>
+			<span></span>
+			<section>
+				<button type="button" id="btnCancelar" class="btnCancelar fecharBalao">Cancelar</button>
+				<button type="submit" id="btnSalvar" class="btnSalvar">Salvar</button>
+			</section>
+		</form>
+	</section>
+	<section class="confirmaExcluir">
+		<p>Tem certeza que quer excluir?</p>
+		<section>
+			<button id="btnConfirmaExcluir">Sim</button>
+			<button class="btnCancelar fecharBalao">Não</button>
+		</section>
+	</section>
+	</section>
+	<section class="overlay"></section>
+</header>
+<main>
+	<section class="entradaDados">
+		<div class="espiral">
+		</div>
+		<section class="campoAddNota" id="campoAddNota">
+			<label for="textoNovaNota">Adicione uma nota:</label>
+			<form action="/note/register" method="post" id="form-nova-nota">
+				<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+				<section>
+					<input type="text" id="tituloNovaNota" placeholder="Título" name="title"
+						value="<%= noteActive.title %>" autocomplete="off">
+					<span></span>
+					<textarea name="content" id="textoNovaNota"><%= noteActive.content %></textarea>
+				</section>
+				<button type="submit" id="btnAddNota">
+					<img src="./img/plus.svg" alt="Adicionar">
+				</button>
+			</form>
+		</section>
+		<section class="mostrarCampoOpc">
+			<label for="mostrarOpc">Opções<span class="linha"></span></label>
+			<input type="checkbox" id="mostrarOpc">
+			<span></span>
+		</section>
+		<section class="campoOpc oculto">
+			<section class="campoFiltrar" id="campoFiltrar">
+				<label for="inputFiltrar">Filtrar:</label>
+				<section>
+					<input type="text" id="inputFiltrar">
+					<button id="btnFiltrar">
+						<img src="./img/filter.svg" alt="Filtrar busca">
+					</button>
+				</section>
+			</section>
+			<section id="campoOrdenar" class="campoOrdenar">
+				<label for="selectOrdenar">Ordenar:</label>
+				<section>
+					<select name="selectOrdenar" id="selectOrdenar">
+						<option value="recentes" selected>Mais recentes</option>
+						<option value="antigos">Mais antigos</option>
+					</select>
+					<span></span>
+				</section>
+			</section>
+			<section id="campoFiltroData" class="campoFiltroData">
+				<label for="inputData">Data:</label>
+				<section>
+					<input type="date" id="inputData">
+				</section>
+			</section>
+			<section class="limpar">
+				<button class="btnLimpar" id="btnLimpar">Limpar</button>
+			</section>
+		</section>
+	</section>
+	<section class="saidaDados" id="saidaDados">
+		<%- include('includes/notes') %>
+	</section>
+</main>
+<%- include('includes/footer') %>
