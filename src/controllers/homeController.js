@@ -7,6 +7,5 @@ exports.index = async (req, res) => {
 
     const notes = req.session.user ? await Note.searchNotes(req.session.user.id) : []
 
-    res.render('index', { notes, noteActive, dayjs })
-    return
+    return res.render('index', { notes, noteActive, dayjs })
 }

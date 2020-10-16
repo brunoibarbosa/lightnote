@@ -2,10 +2,12 @@
 <% notes.forEach(note => { %>
 <section class="nota" data-note-id="<%= note._id %>">
     <h3 class="titulo_nota"><%= note.title %></h3>
-    <span></span>
+    <span class="line"></span>
     <p class="txt_nota"><%= note.content %></p>
     <footer class="data_nota">
-        <%= dayjs(note.lastModified).format('[Última alteração feita em ]DD/MM/YYYY [às] HH:mm') %>
+        Última alteração feita em
+        <span class="date"><%= dayjs(note.lastModified).format('DD/MM/YYYY') %></span> às
+        <%= dayjs(note.lastModified).format('HH[h]mm') %>
     </footer>
     <section class="cta_nota">
         <button class="btnCopia" id="btnCopia">

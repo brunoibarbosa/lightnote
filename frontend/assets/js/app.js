@@ -1,6 +1,11 @@
+// DayJS
+import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
+const customParseFormat = require('dayjs/plugin/customParseFormat')
+dayjs.extend(customParseFormat)
+
 const overlay = document.querySelector('.overlay'),
-    saidaDados = document.querySelector('#saidaDados'),
-    janelaNotificacao = document.querySelector('.janelaNotificacao')
+    saidaDados = document.querySelector('#saidaDados')
 
 // Formulário de login/cadastro
 const formAcesso = document.querySelector('#form-acesso')
@@ -9,6 +14,11 @@ const formAcesso = document.querySelector('#form-acesso')
 const campoNovaNota = document.querySelector('.campoAddNota > form > section'),
     tituloNovaNota = document.querySelector('#tituloNovaNota'),
     textoNovaNota = document.querySelector('#textoNovaNota')
+
+// Janela de visualização da nota
+const janelaVisu = document.querySelector('.visualizacao'),
+    titleVisu = janelaVisu.querySelector('.title-visu'),
+    contentVisu = janelaVisu.querySelector('.content-visu')
 
 // Edição de nota
 const janelaEdit = document.querySelector('#editaNota'),
@@ -21,9 +31,13 @@ const janelaConfirmaExcluir = document.querySelector('.confirmaExcluir')
 
 // Filtros de pesquisa
 const inputFiltrar = document.querySelector('#inputFiltrar'),
-    btnSelect = document.querySelector('#selectOrdenar'),
+    campoSelect = document.querySelector('#selectOrdenar'),
     inputData = document.querySelector('#inputData')
 
+// Armazena todas as notas
+const todasNotas = [...document.querySelectorAll('.nota')]
+
+// Captura eventos de click na página
 document.addEventListener('click', el => {
     const e = el.target
 
@@ -35,14 +49,17 @@ document.addEventListener('click', el => {
         }
     }
 
+    // Fecha notificação antes do tempo acabar
     if (e.classList.contains('btnFechaNotificacao')) {
         e.parentElement.remove()
     }
 
+    // Faz login
     if (e.id === 'btnEntrar') {
         formAcesso.setAttribute('action', '/login')
     }
 
+    // Faz cadastro
     if (e.id === 'btnCadastrar') {
         formAcesso.setAttribute('action', '/register')
     }
@@ -89,7 +106,7 @@ document.addEventListener('click', el => {
 
     // Copiar texto da nota ao clicar no botão
     if (e.id === 'btnCopia') {
-        const nota = e.parentElement.parentElement.querySelector('.txt_nota')
+        const nota = e.parentElement.parentElement
         copiarNota(nota)
         notificaCopiou(nota)
     }
@@ -111,6 +128,58 @@ document.addEventListener('click', el => {
     }
 })
 
+// Expande nota
+todasNotas.forEach(n => {
+    n.addEventListener('mouseover', e => {
+        if (e.target.classList.contains('titulo_nota') || e.target.classList.contains('txt_nota') || e.target.classList.contains('line')) {
+            n.classList.add('visualizar')
+        }
+    })
+
+    n.addEventListener('mousemove', e => {
+        if (!e.target.classList.contains('titulo_nota') && !e.target.classList.contains('txt_nota') && !e.target.classList.contains('line')) {
+            n.classList.remove('visualizar')
+        }
+    })
+
+    n.addEventListener('mouseleave', () => {
+        n.classList.remove('visualizar')
+    })
+
+    n.addEventListener('click', e => {
+        if (e.target.classList.contains('nota')) {
+            titleVisu.textContent = n.querySelector('.titulo_nota').textContent
+            contentVisu.textContent = n.querySelector('.txt_nota').textContent
+            abreJanela(janelaVisu)
+        }
+    })
+})
+
+// Ouvindo mudança de algum campo de pesquisa
+inputFiltrar.addEventListener('input', realizaPesquisa)
+campoSelect.addEventListener('change', realizaPesquisa)
+inputData.addEventListener('input', realizaPesquisa)
+
+// Dispara a pesquisa
+function realizaPesquisa() {
+    const notasFiltradas = todasNotas.filter(n => {
+        const titulo = n.querySelector('.titulo_nota').textContent.toLowerCase()
+        const conteudo = n.querySelector('.txt_nota').textContent.toLowerCase()
+        const data = dayjs(n.querySelector('.date').textContent, 'DD/MM/YYYY').locale('pt-br')
+
+        if (titulo.indexOf(inputFiltrar.value.toLowerCase().trim()) === -1 && conteudo.indexOf(inputFiltrar.value.toLowerCase().trim()) === -1) return false
+        if (dayjs(inputData.value).isValid())
+            if (data.format('DD/MM/YYYY') !== dayjs(inputData.value).locale('pt-br').format('DD/MM/YYYY')) return false
+
+        return true
+    })
+
+    if (campoSelect.value === 'antigos') notasFiltradas.reverse()
+
+    saidaDados.innerHTML = ''
+    notasFiltradas.forEach(n => saidaDados.appendChild(n))
+}
+
 // Abre janela
 function abreJanela(janela) {
     janela.classList.add('aberto')
@@ -121,27 +190,26 @@ function abreJanela(janela) {
 function copiarNota(p) {
     const range = document.createRange()
     window.getSelection().removeAllRanges()
-    range.selectNode(p)
+    range.selectNode(p.querySelector('.txt_nota'))
     window.getSelection().addRange(range)
     document.execCommand('copy')
     window.getSelection().removeAllRanges()
 }
 
 // Aviso de cópia
-function notificaCopiou(p) {
-    if (!p.parentElement.classList.contains('copiado')) {
-        p.parentElement.classList.toggle('copiado')
-        setTimeout(() => p.parentElement.classList.toggle('copiado'), 1000)
+function notificaCopiou(nota) {
+    if (!nota.classList.contains('copiado')) {
+        nota.classList.add('copiado')
+        setTimeout(() => nota.classList.remove('copiado'), 1000)
     }
 }
 
 // Limpa os campos de entrada de dados
 function limpaCampos() {
-    tituloNovaNota.value = ''
-    textoNovaNota.value = ''
     inputFiltrar.value = ''
-    btnSelect.value = 'recentes'
+    campoSelect.value = 'recentes'
     inputData.value = ''
+    todasNotas.forEach(n => saidaDados.appendChild(n))
 }
 
 // Abre a janela de edição

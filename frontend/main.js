@@ -6,7 +6,6 @@ import './assets/sass/main.scss'
 
 // Imagens
 import copy from './assets/img/copy.svg'
-import filter from './assets/img/filter.svg'
 import github from './assets/img/github.svg'
 import linkedin from './assets/img/linkedin.svg'
 import logo from './assets/img/logo.svg'
@@ -17,6 +16,10 @@ import ticket from './assets/img/ticket.svg'
 import more from './assets/img/gear.svg'
 import logout from './assets/img/logout.svg'
 import close from './assets/img/close.svg'
+import calendar from './assets/img/calendar.svg'
+import expandnote from './assets/img/expand-note.svg'
+import copynote from './assets/img/copy-note.svg'
+import favicon from './assets/img/favicon.ico'
 
 // JS
 import './assets/js/app'

@@ -45,27 +45,7 @@
 	<section class="janelaNotificacao">
 		<%- include('includes/messages') %>
 	</section>
-	<section class="editaNota" id="editaNota">
-		<form action="/note/edit/:id" method="post" id="form-edita-nota">
-			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-			<input type="text" id="tituloEdita" name="title">
-			<span></span>
-			<textarea id="conteudoEdita" rows="auto" name="content"></textarea>
-			<span></span>
-			<section>
-				<button type="button" id="btnCancelar" class="btnCancelar fecharBalao">Cancelar</button>
-				<button type="submit" id="btnSalvar" class="btnSalvar">Salvar</button>
-			</section>
-		</form>
-	</section>
-	<section class="confirmaExcluir">
-		<p>Tem certeza que quer excluir?</p>
-		<section>
-			<button id="btnConfirmaExcluir">Sim</button>
-			<button class="btnCancelar fecharBalao">Não</button>
-		</section>
-	</section>
-	</section>
+	<%- include('includes/modals') %>
 	<section class="overlay"></section>
 </header>
 <main>
@@ -97,9 +77,6 @@
 				<label for="inputFiltrar">Filtrar:</label>
 				<section>
 					<input type="text" id="inputFiltrar">
-					<button id="btnFiltrar">
-						<img src="./img/filter.svg" alt="Filtrar busca">
-					</button>
 				</section>
 			</section>
 			<section id="campoOrdenar" class="campoOrdenar">
@@ -116,6 +93,7 @@
 				<label for="inputData">Data:</label>
 				<section>
 					<input type="date" id="inputData">
+					<span></span>
 				</section>
 			</section>
 			<section class="limpar">
