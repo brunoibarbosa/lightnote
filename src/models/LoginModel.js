@@ -1,9 +1,13 @@
+const dayjs = require('dayjs')
 const mongoose = require('mongoose')
 const bcryptjs = require('bcryptjs')
+const NoteModel = require('./NoteModel')
+const destroySession = require('./SessionModel')
 
 const LoginSchema = new mongoose.Schema({
     code: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    lastLogin: { type: Date, required: true }
 })
 
 const LoginModel = mongoose.model('Login', LoginSchema)
@@ -70,8 +74,32 @@ class Login {
 
         this.body = {
             code: this.body.code.toUpperCase(),
-            password: this.body.password
+            password: this.body.password,
+            lastLogin: Date.now()
         }
+    }
+
+    static async updateUser(userId) {
+        await LoginModel.findOneAndUpdate({ _id: userId }, { lastLogin: Date.now() }, { new: true })
+    }
+
+    static async deleteOld() {
+        const user = await LoginModel.find()
+
+        user.forEach(async user => {
+            const lastLogin = dayjs(user.lastLogin)
+
+            if (dayjs().diff(lastLogin, 'week') >= 1) {
+                await LoginModel.findOneAndDelete({ _id: user._id })
+
+                const userNotes = await NoteModel.searchNotes(user._id)
+                userNotes.forEach(async uNote => {
+                    await NoteModel.delete(uNote._id, user._id)
+                })
+
+                await destroySession(user._id)
+            }
+        })
     }
 }
 

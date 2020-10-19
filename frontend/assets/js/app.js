@@ -167,7 +167,8 @@ function realizaPesquisa() {
         const conteudo = n.querySelector('.txt_nota').textContent.toLowerCase()
         const data = dayjs(n.querySelector('.date').textContent, 'DD/MM/YYYY').locale('pt-br')
 
-        if (titulo.indexOf(inputFiltrar.value.toLowerCase().trim()) === -1 && conteudo.indexOf(inputFiltrar.value.toLowerCase().trim()) === -1) return false
+        const textoFiltro = inputFiltrar.value.toLowerCase().trim()
+        if (titulo.indexOf(textoFiltro) === -1 && conteudo.indexOf(textoFiltro) === -1) return false
         if (dayjs(inputData.value).isValid())
             if (data.format('DD/MM/YYYY') !== dayjs(inputData.value).locale('pt-br').format('DD/MM/YYYY')) return false
 
@@ -176,7 +177,7 @@ function realizaPesquisa() {
 
     if (campoSelect.value === 'antigos') notasFiltradas.reverse()
 
-    saidaDados.innerHTML = ''
+    saidaDados.innerHTML = '<span></span>'
     notasFiltradas.forEach(n => saidaDados.appendChild(n))
 }
 

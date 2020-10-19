@@ -15,6 +15,7 @@ const path = require('path')
 const helmet = require('helmet')
 const csrf = require('csurf')
 const { middlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware')
+const cronjob = require('./cronjob')
 
 app.use(helmet())
 app.use(express.urlencoded({ extended: true }))
@@ -26,6 +27,7 @@ const sessionOptions = session({
     resave: false,
     saveUninitialized: false,
     cookie: {
+        idUser: true,
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true
     }
@@ -38,7 +40,7 @@ app.set('views', path.resolve(__dirname, 'src', 'views'))
 app.set('view engine', 'ejs')
 
 app.use(csrf())
-// Nossos próprios middlewares
+
 app.use(middlewareGlobal)
 app.use(checkCsrfError)
 app.use(csrfMiddleware)

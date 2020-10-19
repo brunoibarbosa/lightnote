@@ -3,6 +3,7 @@ const route = express.Router()
 const homeController = require('./src/controllers/homeController')
 const loginController = require('./src/controllers/loginController')
 const noteController = require('./src/controllers/noteController')
+const aboutController = require('./src/controllers/aboutController')
 
 const { loginRequired } = require('./src/middlewares/middleware')
 
@@ -15,7 +16,7 @@ route.post('/register', loginController.register)
 route.get('/logout', loginController.logout)
 
 // Rota sobre
-route.get('/sobre')
+route.get('/sobre', aboutController.index)
 
 // Rotas de nota
 route.post('/note/register', loginRequired, noteController.register)

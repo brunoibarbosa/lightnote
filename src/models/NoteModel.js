@@ -51,7 +51,6 @@ class Note {
     }
 
     static async delete(noteId, userId) {
-        if (typeof noteId !== 'string' || typeof userId !== 'string') return
         const note = await NoteModel.findOneAndDelete({ _id: noteId, userId })
         return note
     }

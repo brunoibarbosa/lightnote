@@ -3,6 +3,9 @@ import 'regenerator-runtime/runtime'
 
 // SASS
 import './assets/sass/main.scss'
+import './assets/sass/home.scss'
+import './assets/sass/about.scss'
+import './assets/sass/404.scss'
 
 // Imagens
 import copy from './assets/img/copy.svg'

@@ -1,0 +1,29 @@
+@import 'variaveis';
+@import 'mixins';
+
+#error-404 {
+    @include flex();
+    min-height: 100vh;
+    text-align: center;
+
+    h1 {
+        color: $cor-principal;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    @include media-desktop {
+        h1 {
+            font-size: 4rem;
+        }
+    
+        p {
+            font-size: 1.5rem;
+        }
+    }
+}

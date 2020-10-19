@@ -1,0 +1,23 @@
+@import 'variaveis';
+@import 'mixins';
+
+header#header-sobre {
+    background-color: $cor-principal;
+    color: $branco;
+    justify-content: space-between;
+    font-weight: 600;
+    padding: 1rem;
+
+    a {
+        color: $branco;
+    }
+
+    span {
+        font-weight: 700;
+        display: none;
+
+        @include media-desktop {
+            display: block;
+        }
+    }
+}
