@@ -10,6 +10,9 @@ header#header-sobre {
 
     a {
         color: $branco;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     span {
@@ -19,5 +22,67 @@ header#header-sobre {
         @include media-desktop {
             display: block;
         }
+    }
+}
+
+main#main-sobre {
+    text-align: center;
+    
+    @include media-desktop {
+        font-size: 120%;
+    }
+
+    & > img {
+        margin: 2rem 0;
+    }
+
+    & > section {
+        margin: 1rem 0;
+
+        p:first-child {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            margin: .5rem;
+        }
+
+        @include media-desktop {
+            margin: 2rem 0 4rem;
+        }
+    }
+
+    h2 {
+        color: $cor-principal;
+    }
+
+    p {
+        margin-top: .5rem;
+        font-weight: 600;
+    }
+
+    ul {
+        margin: 2rem 0;
+        list-style: none;
+        
+        h2 {
+            margin-bottom: 1rem;
+        }
+    }
+
+    li {
+        background-color: darken($branco, 3%);
+        max-width: max-content;
+        margin: 0 auto;
+        margin-top: .5rem;
+        padding: .5rem 1rem;
+        border-radius: 5px;
+        border-left: 3px solid $cor-principal;
+    }
+
+    a > img {
+        pointer-events: initial;
+        width: 30px;
+        filter: invert(1);
     }
 }

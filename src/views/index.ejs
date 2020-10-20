@@ -16,7 +16,7 @@
 		<button class="fecharBalao">Fechar</button>
 		<% } else { %>
 		<p>Insira ou crie um código e uma senha para acessar as notas em outros dispositivos.</p>
-		<form id="form-acesso" action="" method="post">
+		<form id="form-acesso" action="/" method="post">
 			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
 			<section>
 				<input type="text" name="code" id="code" maxlength="6">
