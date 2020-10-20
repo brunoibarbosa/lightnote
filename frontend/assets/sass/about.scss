@@ -47,8 +47,8 @@ main#main-sobre {
             margin: .5rem;
         }
 
-        @include media-desktop {
-            margin: 2rem 0 4rem;
+        &.devby {
+            margin-bottom: 4rem;
         }
     }
 
