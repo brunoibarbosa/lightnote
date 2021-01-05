@@ -27,7 +27,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## 💻 Projeto
 
 O LightNote é uma aplicação para quem tem pressa no dia a dia e precisa poupar o máximo de tempo. Faça anotações sem nem mesmo notar!
-Acesse o site em [lightnote.tk](https://lightnote.tk/)
+Acesse o site em [lightnote.ml](https://lightnote.ml/)
 
 ## 🔖 Layout
 
